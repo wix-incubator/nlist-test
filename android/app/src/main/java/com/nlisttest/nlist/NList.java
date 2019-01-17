@@ -17,6 +17,7 @@ public class NList extends RecyclerView {
     private int height;
     private DataBinding[] bindings;
     private ReadableArray data;
+    private Action[] actions;
 
     public NList(ThemedReactContext reactContext, ReactNativeHost host) {
         super(reactContext);
@@ -47,9 +48,14 @@ public class NList extends RecyclerView {
         createAdapterIfReady();
     }
 
+    public void setActions(@NonNull Action[] actions) {
+        this.actions = actions;
+        createAdapterIfReady();
+    }
+
     private void createAdapterIfReady() {
-        if (templates != null && bindings != null && data != null && height != 0) {
-            final NListAdapter adapter = new NListAdapter(getContext(), host, templates, height, data, bindings);
+        if (templates != null && bindings != null && data != null && height != 0 && actions != null) {
+            final NListAdapter adapter = new NListAdapter(getContext(), host, templates, height, data, bindings, actions);
             setAdapter(adapter);
 
             postDelayed(new Runnable() {
@@ -62,4 +68,5 @@ public class NList extends RecyclerView {
 
         }
     }
+
 }

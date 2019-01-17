@@ -92,12 +92,35 @@ public class ReactNListManager extends SimpleViewManager<NList> {
         list.setBindings(bindings);
     }
 
+    @SuppressWarnings("unused")
+    @ReactProp(name = "actions")
+    public void setActions(@NonNull NList list, @Nullable ReadableArray actionsArray) {
+        if (actionsArray == null) {
+            throw new IllegalArgumentException("actions is absent");
+        }
+
+        Log.d(LOG_TAG, "actions: " + actionsArray);
+
+        Action[] actions = new Action[actionsArray.size()];
+        for (int i = 0; i < actionsArray.size(); i++) {
+            ReadableMap map = actionsArray.getMap(i);
+            String actionString = map.getString("action");
+            String[] actionDetails = actionString.split("\\.");
+            String viewTag = actionDetails[0];
+            String actionName = actionDetails[1];
+
+            actions[i] = new Action(viewTag, actionName);
+        }
+
+        list.setActions(actions);
+    }
+
     @NonNull
     private String capFirstChar(@NonNull String string) {
         return string.substring(0, 1).toUpperCase() + string.substring(1);
     }
 
-    public int px(Context context, float dp) {
+    private int px(Context context, float dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density);
     }
 }

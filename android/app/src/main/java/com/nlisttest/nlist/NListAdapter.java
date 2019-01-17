@@ -18,6 +18,7 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
     private int height;
     private ReadableArray data;
     private DataBinding[] bindings;
+    private Action[] actions;
 
     private boolean prerendering;
 
@@ -26,13 +27,14 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
                  String templates,
                  int height,
                  ReadableArray data,
-                 DataBinding[] bindings) {
+                 DataBinding[] bindings, Action[] actions) {
         this.context = context;
         this.host = host;
         this.template = templates;
         this.height = height;
         this.data = data;
         this.bindings = bindings;
+        this.actions = actions;
 
         this.prerendering = true;
     }
@@ -43,7 +45,7 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
     private FrameLayout frameLayout;
 
 
-    public void stopPrerendering() {
+    void stopPrerendering() {
         prerendering = false;
         frameLayout.removeAllViews();
         notifyDataSetChanged();
@@ -85,7 +87,7 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (!prerendering) {
-            holder.root.setData(data.getMap(position), bindings);
+            holder.root.setData(position, data.getMap(position), bindings, actions);
         }
     }
 

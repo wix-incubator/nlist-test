@@ -14,6 +14,7 @@ export default class App extends Component<Props> {
                 itemHeight={ListItem.height}
                 data={App.getData()}
                 binding={App.getDataBinding()}
+                actions={App.getActions()}
             />
         );
     }
@@ -38,6 +39,15 @@ export default class App extends Component<Props> {
                 data: "image",
                 view: "image.source"
             }
+        ];
+    }
+
+    static getActions() {
+        return [
+            {
+                action: "button.touch"
+            }
+
         ];
     }
 
