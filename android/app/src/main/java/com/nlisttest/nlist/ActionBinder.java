@@ -7,7 +7,7 @@ public class ActionBinder {
 
     @SuppressWarnings("UnusedReturnValue")
     public static boolean bind(@NonNull Action action, @NonNull NListItem listItem) {
-        View view = listItem.findViewWithTag(action.getViewTag());
+        View view = NListHelper.findViewWithNativeId(listItem, action.getViewTag());
         if (view == null) {
             return false;
         }

@@ -20,7 +20,7 @@ class DataBinder {
                         @NonNull ReadableMap data,
                         @NonNull View root) {
 
-        final View view = root.findViewWithTag(dataBinding.getViewTag());
+        final View view = NListHelper.findViewWithNativeId(root, dataBinding.getViewTag());
         if (view == null) {
             return false;
         }

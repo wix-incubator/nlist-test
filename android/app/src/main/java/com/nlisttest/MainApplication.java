@@ -84,6 +84,8 @@ public class MainApplication extends Application implements ReactApplication, Re
     public void onCreate() {
         super.onCreate();
 
+        Log.d("NList_bench", "Start: " + System.currentTimeMillis());
+
         SoLoader.init(this, /* native exopackage */ false);
     }
 

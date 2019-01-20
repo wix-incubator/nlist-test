@@ -9,9 +9,12 @@ import android.util.Log;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
+
+import java.util.Map;
 
 public class ReactNListManager extends SimpleViewManager<NList> {
 
@@ -113,6 +116,17 @@ public class ReactNListManager extends SimpleViewManager<NList> {
         }
 
         list.setActions(actions);
+    }
+
+    @javax.annotation.Nullable
+    @Override
+    public Map<String, Object> getExportedCustomBubblingEventTypeConstants() {
+        return MapBuilder.<String, Object>builder()
+                .put("listEvent",
+                        MapBuilder.of(
+                                "phasedRegistrationNames",
+                                MapBuilder.of("bubbled", "onListEvent")))
+                .build();
     }
 
     @NonNull

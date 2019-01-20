@@ -5,22 +5,28 @@ import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.ReadableMap;
 
 public class NListItem extends ReactRootView implements View.OnTouchListener {
+    private static final String ROOT_VIEW_TAG = "_item";
+
     private int position;
     private ReadableMap data;
     private DataBinding[] bindings;
     private Action[] actions;
+    private NListEventListener listener;
 
-    public NListItem(Context context, int height) {
+    public NListItem(Context context, int height, NListEventListener listener) {
         super(context);
 
         ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(-1, height);
         this.setLayoutParams(lp);
+
+        this.listener = listener;
+
+        NListHelper.setNativeId(this, ROOT_VIEW_TAG);
     }
 
     @Override
@@ -65,8 +71,12 @@ public class NListItem extends ReactRootView implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
+
         if (MotionEvent.ACTION_UP == motionEvent.getAction()) {
-            Toast.makeText(getContext(), "Clicked " + view.getTag() + ", item " + (position + 1), Toast.LENGTH_SHORT).show();
+            String nativeId = NListHelper.getNativeId(view);
+            if (nativeId != null) {
+                listener.onListEvent(new NListEvent("touch", position, nativeId));
+            }
         }
         return true;
     }

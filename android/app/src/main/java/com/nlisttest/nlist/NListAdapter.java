@@ -20,6 +20,9 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
     private DataBinding[] bindings;
     private Action[] actions;
 
+    @NonNull
+    private NListEventListener listener;
+
     private boolean prerendering;
 
     NListAdapter(Context context,
@@ -27,7 +30,9 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
                  String templates,
                  int height,
                  ReadableArray data,
-                 DataBinding[] bindings, Action[] actions) {
+                 DataBinding[] bindings,
+                 Action[] actions,
+                 @NonNull NListEventListener listener) {
         this.context = context;
         this.host = host;
         this.template = templates;
@@ -35,6 +40,7 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
         this.data = data;
         this.bindings = bindings;
         this.actions = actions;
+        this.listener = listener;
 
         this.prerendering = true;
     }
@@ -68,7 +74,7 @@ public class NListAdapter extends RecyclerView.Adapter<NListAdapter.ViewHolder> 
             ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(-1, 1000);
             frameLayout.setLayoutParams(lp);
             for (int i = 0; i < items.length; i++) {
-                NListItem listItem = new NListItem(context, height);
+                NListItem listItem = new NListItem(context, height, listener);
                 listItem.startReactApplication(host.getReactInstanceManager(), template);
                 items[i] = listItem;
                 listItem.setVisibility(View.INVISIBLE);

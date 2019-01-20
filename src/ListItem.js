@@ -9,21 +9,13 @@ export default class ListItem extends Component<Props> {
         return false;
     }
 
-    /*
-    Button:
-        1. id of button
-        2. how to pass list item id ???
-     */
-
-    static onButtonPress(e) {
-        console.log(e.toString());
-    }
+    doNothing() {}
 
     render() {
         return (<View>
-            <Button title="Press me!" testID="button" onPress={(e) => ListItem.onButtonPress(e)}/>
-            <Text style={{height: 60, backgroundColor: "#dddddd"}} testID="content">TEST</Text>
-            <Image style={{width:100,height:100, backgroundColor:"#ff0000"}} testID="image"/>
+            <Button title="Press me!" nativeID="button" onPress={() => this.doNothing()} testID={"button"}/>
+            <Text style={{height: 60, backgroundColor: "#dddddd"}} nativeID="content">TEST</Text>
+            <Image style={{width:100,height:100, backgroundColor:"#ff0000"}} nativeID="image"/>
         </View>);
     }
 
